@@ -27,6 +27,7 @@ override_dh_auto_test:
 	# Test suite fails at the moment, because of changes in Samba.
 
 override_dh_auto_build:
+	mkdir bin
 	$(MAKE) datadir=/usr/share/openchange LDFLAGS="$(LDFLAGS)" DSOOPT="$(DSOOPT)" all
 
 override_dh_auto_clean:
@@ -37,6 +38,7 @@ override_dh_auto_clean:
 	rm -rf mapiproxy/services/ocsmanager/dist
 	rm -f python/openchange/mapi.so
 	rm -f configure config.h.in pyopenchange/mapistore/errors.c
+	rmdir bin || true
 
 override_dh_shlibdeps:
 	LD_LIBRARY_PATH=$(DESTDIR)/usr/lib:$$LD_LIBRARY_PATH dh_shlibdeps -a
