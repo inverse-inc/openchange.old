@@ -152,7 +152,7 @@ for Samba, using wsgi.
 
 %build
 ./autogen.sh
-mkdir rpmbin
+mkdir rpmbin bin
 ln -s %{__python} rpmbin/python
 ln -s /usr/bin/%{python_config} rpmbin/python-config
 export PATH=$PWD/rpmbin:$PATH
@@ -310,6 +310,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/lib/openchange/web/rpcproxy/rpcproxy/*
 
 %changelog
+* Mon Nov 12 2012 Jean Raby <jraby@inverse.ca> 1.0.prerelease
+- Create bin/ - missing since move to git
+
 * Wed Aug 9 2012 Jean Raby <jraby@inverse.ca> 1.0.prerelease
 - add missing log folder for ocsmanager
 
