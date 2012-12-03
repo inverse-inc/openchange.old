@@ -11,6 +11,8 @@ else
 	MAKE=make
 fi
 
+PATCH=$(which patch)
+
 # If you have a samba checkout (even not up-to-date), you can make this a lot faster using --reference, e.g.
 # SAMBA_GIT_REFERENCE="--reference $HOME/samba-master"
 if test x"$SAMBA_GIT_REPO" = x""; then
@@ -222,6 +224,10 @@ download() {
 #
 patch() {
 
+    # NDR alignment fixes
+    $PATCH samba4/librpc/ndr/ndr.c script/samba4-beta-fixes/ndr.c.diff
+    $PATCH samba4/librpc/ndr/libndr.h script/samba4-beta-fixes/libndr.h.diff
+
     pushd samba4/source3
     sed "s/deps='ndr security NDR_SECURITY samba-util UTIL_TDB'/deps='ndr security NDR_SECURITY samba-util UTIL_TDB ccan'/g" wscript_build > wscript_build2
     mv wscript_build2 wscript_build
@@ -262,7 +268,7 @@ packages() {
 
 	extra=""
 	if [ "$lib" == "lib/ldb" ]; then
-	    extra="--disable-tdb2 --builtin-libraries=ccan"
+	    extra="--builtin-libraries=ccan"
 	fi
 
 	echo ./configure -C --prefix=$SAMBA_PREFIX --enable-developer --bundled-libraries=NONE $extra
@@ -299,7 +305,7 @@ compile() {
 
     cd $RUNDIR/../samba4
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$SAMBA_PREFIX/lib/pkgconfig
-    ./configure.developer -C --prefix=$SAMBA_PREFIX --builtin-libraries=ccan,replace --disable-tdb2
+    ./configure.developer -C --prefix=$SAMBA_PREFIX --builtin-libraries=ccan,replace
     error_check $? "samba4 configure"
 
     echo "Step2: Compile Samba4 (Source)"
