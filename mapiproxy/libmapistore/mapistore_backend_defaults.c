@@ -133,9 +133,9 @@ static enum mapistore_error mapistore_op_defaults_delete_message(void *folder_ob
 	return MAPISTORE_ERR_NOT_IMPLEMENTED;
 }
 
-static enum mapistore_error mapistore_op_defaults_move_copy_messages(TALLOC_CTX *mem_ctx,
-                                                                     void *target_folder,
+static enum mapistore_error mapistore_op_defaults_move_copy_messages(void *target_folder,
 								     void *source_folder,
+                                                                     TALLOC_CTX *mem_ctx,
 								     uint32_t mid_count,
 								     uint64_t *source_mids,
 								     uint64_t *target_mids,
