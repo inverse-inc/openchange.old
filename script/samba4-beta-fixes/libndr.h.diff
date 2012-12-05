@@ -1,0 +1,17 @@
+--- ./samba4/librpc/ndr/libndr.h	2012-07-30 00:04:32.000000000 -0400
++++ ./script/samba4-beta-fixes/libndr.h	2012-11-22 09:45:08.714378399 -0500
+@@ -135,13 +135,7 @@
+ #define LIBNDR_FLAG_ALIGN4       (1<<23)
+ #define LIBNDR_FLAG_ALIGN8       (1<<24)
+ 
+-#define LIBNDR_ALIGN_FLAGS ( 0        | \
+-		LIBNDR_FLAG_NOALIGN   | \
+-		LIBNDR_FLAG_REMAINING | \
+-		LIBNDR_FLAG_ALIGN2    | \
+-		LIBNDR_FLAG_ALIGN4    | \
+-		LIBNDR_FLAG_ALIGN8    | \
+-		0)
++#define LIBNDR_ALIGN_FLAGS (LIBNDR_FLAG_ALIGN2|LIBNDR_FLAG_ALIGN4|LIBNDR_FLAG_ALIGN8)
+ 
+ #define LIBNDR_PRINT_ARRAY_HEX   (1<<25)
+ #define LIBNDR_PRINT_SET_VALUES  (1<<26)

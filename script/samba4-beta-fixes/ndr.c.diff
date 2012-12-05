@@ -1,0 +1,19 @@
+--- ./samba4/librpc/ndr/ndr.c	2012-07-30 00:04:32.000000000 -0400
++++ ./script/samba4-beta-fixes/ndr.c	2012-11-22 09:45:08.714378399 -0500
+@@ -378,12 +378,12 @@
+ 		(*pflags) &= ~LIBNDR_FLAG_LITTLE_ENDIAN;
+ 		(*pflags) &= ~LIBNDR_FLAG_NDR64;
+ 	}
+-	if (new_flags & LIBNDR_ALIGN_FLAGS) {
+-		/* Ensure we only have the passed-in
+-		   align flag set in the new_flags,
+-		   remove any old align flag. */
++	if (new_flags & LIBNDR_FLAG_REMAINING) {
+ 		(*pflags) &= ~LIBNDR_ALIGN_FLAGS;
+ 	}
++	if (new_flags & LIBNDR_ALIGN_FLAGS) {
++		(*pflags) &= ~LIBNDR_FLAG_REMAINING;
++	}
+ 	if (new_flags & LIBNDR_FLAG_NO_RELATIVE_REVERSE) {
+ 		(*pflags) &= ~LIBNDR_FLAG_RELATIVE_REVERSE;
+ 	}
